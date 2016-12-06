@@ -38,7 +38,30 @@
                                     $(selector).append("<option>"+i+"</option>");
                                 }
                             }
+                    }
+                    //select event
+                    function selectYearOrMonth(selector){
+                        $(selector).on("change",function(){
+                         $("#day").empty();
+                            var selected_month=parseInt($("#month").val());
+                            if(ifLeapYear()){
+                            if($("#month").val()==2){
+                                getDate(29,0,"#day");
+                            }
 
+                            }else{
+                                if($("#month").val()==2){
+                                    getDate(28,0,"#day");
+                                }
+                            }
+                            if(month_31days.indexOf(selected_month) !=-1){
+                                //month of 31days
+                                getDate(31,0,"#day");
+                            }
+                            else{
+                                getDate(30,0,"#day");
+                                }     
+                        });
                     }
 
                     //set current year
@@ -69,51 +92,8 @@
                     }
                     }
                     //select event
-                    $("#year").on("change",function(){
-                            $("#day").empty();
-                            if(ifLeapYear()){
-                            if($("#month").val()==2){
-                                getDate(29,0,"#day");
-                            }
-
-                            }else{
-                                if($("#month").val()==2){
-                                    getDate(28,0,"#day");
-                                }
-                            }
-                            if(month_31days.indexOf(selected_month) !=-1){
-                                //month of 31days
-                                getDate(31,0,"#day");
-                            }
-                            else{
-                                getDate(30,0,"#day");
-                                }     
-                            
-                            });
-                    $("#month").on("change",function(){
-                            $("#day").empty();
-                            //get days according to current_year and month
-                            var selected_month=parseInt($("#month").val());
-                            if(ifLeapYear()){
-                                if($("#month").val()==2){
-                                    getDate(29,0,"#day");
-                                }
-                            }
-                            //not leap year
-                            else{
-                                if($("#month").val()==2){
-                                    getDate(28,0,"#day");
-                                }
-                                              
-                            }
-                            if(month_31days.indexOf(selected_month) !=-1){
-                                //month of 31days
-                                getDate(31,0,"#day");
-                            }
-                            else{
-                                getDate(30,0,"#day");
-                                }                              
-                        });
+                    selectYearOrMonth("#year");
+                    selectYearOrMonth("#month");
                     });
         </script>
     </body>    
